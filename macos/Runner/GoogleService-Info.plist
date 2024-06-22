@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyDeaJrr6dhEwTxEP7Iwe7xGhKd-_ZWQo1c</string>
+	<key>GCM_SENDER_ID</key>
+	<string>430581295698</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.dashboard.RunnerTests</string>
+	<key>PROJECT_ID</key>
+	<string>ecoshop-11652</string>
+	<key>STORAGE_BUCKET</key>
+	<string>ecoshop-11652.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:430581295698:ios:714a43a430ed8fdea24d8b</string>
+</dict>
+</plist>

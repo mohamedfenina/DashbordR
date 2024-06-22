@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "430581295698",
+    "project_id": "ecoshop-11652",
+    "storage_bucket": "ecoshop-11652.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:430581295698:android:d4be5f8c9b978dbba24d8b",
+        "android_client_info": {
+          "package_name": "com.example.dashboard"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVGtA0sS--Wi9vuaBdO4uocYEtCVxJj1A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
