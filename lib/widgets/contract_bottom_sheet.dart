@@ -96,7 +96,7 @@ class _ContractBottomSheetState extends State<ContractBottomSheet> {
                                             index) {
                                           return MaterialButton(
                                             onPressed: (){
-                                              Navigator.pop(context,[document![index]['id'],document![index]['name']]);
+                                              Navigator.pop(context,[document[index]['id'],document[index]['name']]);
                                             },
                                             child: Container(
                                               height: 55,

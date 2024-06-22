@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import '../../colors.dart';
 import '../../components.dart';
 import '../../dio_helper.dart';
+import '../../widgets/contract_bottom_sheet.dart';
 
 
 
@@ -24,14 +25,20 @@ class _PendingTaskScreenState extends State<PendingTaskScreen> {
   DateTime lastDate =DateTime(DateTime.now().year,DateTime.now().month,DateTime.now().day);
   List<String> employe = [];
   List<String> product = [];
-  String? selectedEmploye;
-  String? selectedProduct;
+  TextEditingController ProductController = TextEditingController();
+  String productId = '';
+  late Future<List<Map<String, dynamic>>> ApiDataFuture ;
+  @override
+  void initState() {
+    ApiDataFuture = getRateData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder(
-        future: getRateData(), // Use the function to get the stream
+        future: ApiDataFuture, // Use the function to get the stream
         builder: ( context,  snapshot) {
           if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
@@ -43,55 +50,49 @@ class _PendingTaskScreenState extends State<PendingTaskScreen> {
           if(snapshot.data!.isEmpty ){
             return Column(
               children: [
-                TextButton(
-                  onPressed: () {
-                    showModalBottomSheet(context: context,
+                defaultFormField(
+                    readonly: true,
 
-                      builder: (context) {
-                        return TaskFilterComponent(
-                          categorieList: employe,
-                          onApplyFilter: handleFilter,
-                          done: true,
-                          firstdate: firstDate,
-                          lastDate: lastDate,
-                          category: selectedEmploye,
-                          categorieList1: product,
-                          category1: selectedProduct,
+                    tab: (){
+                      showModalBottomSheet(
+                        isScrollControlled: true,
+                        enableDrag: false,
+                        backgroundColor: Colors.black.withOpacity(0.5),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(16.0),
+                            topRight: Radius.circular(16.0),
+                          ),
+                        ),
+                        context: context,
+                        builder: (BuildContext context) {
+                          return FractionallySizedBox(
+                              heightFactor: 0.7,
+                              child: ContractBottomSheet());
+                        },
+                      ).then((value) {
+                        if(value != null){
+                          ProductController.text = value[1];
+                          productId = value[0].toString();
+                          print('tesst');
+                          setState(() {
+                            ApiDataFuture = getRateDataById();
+                          });
 
 
-                        );
-                      },);
-                  },
-                  child: Container(
-                    width: double.infinity,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(color: mainColor,
-                        width: 2,),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: const Padding(
-                      padding:  EdgeInsets.symmetric(
-                          vertical: 5, horizontal: 10),
-                      child: Row(
-                        children: [
-                          Icon(Icons.search, color: mainColor, size: 35),
-                          SizedBox(width: 5,),
-                          Text('Rate ?',
-                            style: TextStyle(
-                                color: mainColor,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w800
-                            ),),
-                          Spacer(),
-                          Icon(Icons.filter_list_rounded,
-                              color: mainColor,
-                              size: 35),
-                        ],
-                      ),
-                    ),
-                  ),
+
+                        }
+                      });
+                    },
+                    contoller: ProductController,
+                    type: TextInputType.text,
+                    validate: (value){
+                      if(value.isEmpty){
+                        return'le nom est manquant ';
+                      }
+                    },
+                    label: 'Select Product Name',
+                    prefix: Icons.propane_tank_rounded
                 ),
                 const Center(
                   child: Text('Aucune donnée disponible',
@@ -124,55 +125,49 @@ class _PendingTaskScreenState extends State<PendingTaskScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   if(index == 0)
-                    TextButton(
-                      onPressed: () {
-                        showModalBottomSheet(context: context,
+                    defaultFormField(
+                        readonly: true,
 
-                          builder: (context) {
-                            return TaskFilterComponent(
-                              categorieList1: product,
-                              categorieList:employe,
-                              category1: selectedProduct,
-                              onApplyFilter: handleFilter,
-                              done: true,
-                              firstdate: firstDate,
-                              lastDate: lastDate,
-                              category: selectedEmploye,
+                        tab: (){
+                          showModalBottomSheet(
+                            isScrollControlled: true,
+                            enableDrag: false,
+                            backgroundColor: Colors.black.withOpacity(0.5),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(16.0),
+                                topRight: Radius.circular(16.0),
+                              ),
+                            ),
+                            context: context,
+                            builder: (BuildContext context) {
+                              return FractionallySizedBox(
+                                  heightFactor: 0.7,
+                                  child: ContractBottomSheet());
+                            },
+                          ).then((value) {
+                            if(value != null){
+                              ProductController.text = value[1];
+                              productId = value[0].toString();
+                              print('tesst');
+                              setState(() {
+                                ApiDataFuture = getRateDataById();
+                              });
 
 
-                            );
-                          },);
-                      },
-                      child: Container(
-                        width: double.infinity,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(color: mainColor,
-                            width: 2,),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: const Padding(
-                          padding:  EdgeInsets.symmetric(
-                              vertical: 5, horizontal: 10),
-                          child: Row(
-                            children: const [
-                              Icon(Icons.search, color: mainColor, size: 35),
-                              SizedBox(width: 5,),
-                              Text('Rate ?',
-                                style: TextStyle(
-                                    color: mainColor,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w800
-                                ),),
-                              Spacer(),
-                              Icon(Icons.filter_list_rounded,
-                                  color: mainColor,
-                                  size: 35),
-                            ],
-                          ),
-                        ),
-                      ),
+
+                            }
+                          });
+                        },
+                        contoller: ProductController,
+                        type: TextInputType.text,
+                        validate: (value){
+                          if(value.isEmpty){
+                            return'le nom est manquant ';
+                          }
+                        },
+                        label: 'Select Product Name',
+                        prefix: Icons.propane_tank_rounded
                     ),
                   if (showDateHeader)
                     Padding(
@@ -247,16 +242,51 @@ class _PendingTaskScreenState extends State<PendingTaskScreen> {
 
 
 
+  Future<List<Map<String, dynamic>>> getRateDataById() async {
+    try {
+      final response = await DioHelper.getData(url: 'rates/getRatesByProduct/$productId',
 
 
 
-  void handleFilter(DateTime firstDate, DateTime lastDate,
-      String? selectedValue, String? selectedValue1) {
-    setState(() {
-      this.firstDate = firstDate;
-      this.lastDate = lastDate;
-      selectedEmploye = selectedValue;
-      selectedProduct = selectedValue1;
-    });
+      ); // Replace with your API endpoint
+      print(response);
+      if (response.statusCode == 200) {
+        final List<dynamic> data = response.data;
+        List<Map<String,dynamic>> result = [];
+        data.map((e) {
+          Map<String, dynamic> contractData = {
+            'id': e['_id'],
+            'user': e['rateOwner'],
+            'product': e['product'],
+            'rate': e['rating'],
+            'date': DateTime.parse(e['createdAt']),
+
+          };
+          result.add(contractData);
+        }).toList();
+
+
+        return result;
+      } else {
+        throw Exception('Failed to load data');
+      }
+    } catch (error) {
+      print(error);
+      if (error is DioException && (error.type == DioExceptionType.connectionTimeout || error.type == DioExceptionType.connectionError)){
+        // Handle connection timeout error
+        return Future.error('connection timeout');
+      }
+      else if (error is DioException) {
+        return Future.error('connection other');
+      }
+
+
+      // print(error.response);
+      // print('Error message: ${error.error}');
+      // print('Error description: ${error.message}');
+      else {
+        return Future.error('connection other');
+      }
+    }
   }
 }
