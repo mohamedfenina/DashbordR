@@ -156,10 +156,10 @@ class CategorieProduction{
         List<Map<String,dynamic>> result = [];
         data.map((e) {
           Map<String, dynamic> contractData = {
-            'id': e['_id'],
-            'user': e['commentOwner'],
-            'product': e['product'],
-            'content': e['content'],
+            'id': e['_id'] ?? '',
+            'user': e['commentOwner'] ?? '',
+            'product': e['product'] ?? '',
+            'content': e['content'] ?? '',
 
           };
           result.add(contractData);
